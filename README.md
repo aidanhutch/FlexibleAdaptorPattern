@@ -32,6 +32,7 @@
 - **Python**: Leverage duck typing and protocols to create flexible and dynamic adapters.
 - **Rust**: Utilize traits and possibly macro systems to ensure type safety and performance.
 
+
 ## So why use this over conventional DDD techniques?
 
 The Flexible Adapter Pattern offers several advantages over conventional Domain-Driven Design (DDD) approaches, particularly in terms of flexibility, maintainability, and adaptability across different environments and technologies. Here's how it enhances the DDD experience:
