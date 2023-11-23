@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34302.85
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlexibleAdaptorPattern", "FlexibleAdaptorPattern\FlexibleAdaptorPattern.csproj", "{82245D3E-36B9-4BB9-86FE-097D3B007B3C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlexibleAdaptorPattern", "FlexibleAdaptorPattern\FlexibleAdaptorPattern.csproj", "{82245D3E-36B9-4BB9-86FE-097D3B007B3C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

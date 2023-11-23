@@ -7,10 +7,6 @@ using Microsoft.Extensions.DependencyInjection;
     Date: 23/11/2023
 */
 
-Console.WriteLine("Flexible Adaptor Pattern Example...");
-
-// Simulate the Application Run
-
 // Setup DI container
 var serviceCollection = new ServiceCollection();
 var startup = new Startup();
@@ -19,11 +15,15 @@ var serviceProvider = serviceCollection.BuildServiceProvider();
 
 // Resolve Application with dependencies
 var application = serviceProvider.GetService<Application>();
-var userEntity = new UserEntity();
+var userEntity = new UserEntity
+{
+    Username = "SampleUser",
+    Email = "sample@email.com"
+};
+
 application?.ProcessUser(userEntity);
 
-
-// Step 1: Define Entity and Domain Object Interfaces
+// Entity and Domain Object Interfaces
 public interface IEntity
 {
     void Save();
@@ -34,10 +34,12 @@ public interface IDomainObject
     void Validate();
 }
 
-// Step 2: Implement Entity and Domain Object
+// Implement Entity and Domain Object
 public class UserEntity : IEntity
 {
-    // User-specific properties
+    public string Username { get; set; }
+    public string Email { get; set; }
+
     public void Save()
     {
         Console.WriteLine("User entity saved.");
@@ -46,14 +48,40 @@ public class UserEntity : IEntity
 
 public class UserDomainObject : IDomainObject
 {
-    // User-specific properties
+    public string Username { get; set; }
+    public string Email { get; set; }
+
     public void Validate()
     {
+        ValidateUsername();
+        ValidateEmail();
         Console.WriteLine("User domain object validated.");
+    }
+
+    private void ValidateUsername()
+    {
+        if (string.IsNullOrWhiteSpace(Username))
+        {
+            throw new ArgumentException("Username cannot be null or empty.");
+        }
+        // Additional username specific validations
+    }
+
+    private void ValidateEmail()
+    {
+        if (string.IsNullOrWhiteSpace(Email))
+        {
+            throw new ArgumentException("Email cannot be null or empty.");
+        }
+        if (!Email.Contains("@"))
+        {
+            throw new ArgumentException("Email is not in a valid format.");
+        }
+        // Additional email specific validations
     }
 }
 
-// Step 3: Define the Adapter Interface and Implementation
+// Adapter Interface and Implementation
 public interface IEntityAdapter<T> where T : IEntity
 {
     IDomainObject Adapt(T entity);
@@ -64,11 +92,15 @@ public class UserAdapter : IEntityAdapter<UserEntity>
     public IDomainObject Adapt(UserEntity entity)
     {
         Console.WriteLine("Adapting UserEntity to UserDomainObject.");
-        return new UserDomainObject();
+        return new UserDomainObject
+        {
+            Username = entity.Username,
+            Email = entity.Email
+        };
     }
 }
 
-// Step 4: Configure Dependency Injection
+// Configure Dependency Injection
 public class Startup
 {
     public void ConfigureServices(IServiceCollection services)
@@ -78,7 +110,7 @@ public class Startup
     }
 }
 
-// Step 5: Implement the Application Logic
+// Implement the Application Logic
 public class Application
 {
     private readonly IEntityAdapter<UserEntity> _userAdapter;
@@ -90,12 +122,15 @@ public class Application
 
     public void ProcessUser(UserEntity userEntity)
     {
-        IDomainObject userDomainObject = _userAdapter.Adapt(userEntity);
-        userDomainObject.Validate();
-        userEntity.Save();
+        try
+        {
+            IDomainObject userDomainObject = _userAdapter.Adapt(userEntity);
+            userDomainObject.Validate();
+            userEntity.Save();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Validation failed: {ex.Message}");
+        }
     }
 }
-
-
-
-
