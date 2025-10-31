@@ -1,3 +1,4 @@
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 # Flexible Adapter Pattern
 
 (c) 2023 Aidan Hutchinson - first published 23/11/2023
