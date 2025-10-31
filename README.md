@@ -1,6 +1,6 @@
 # Flexible Adapter Pattern
 
-- By Aidan Hutchinson - 23/11/2023
+(c) 2023 Aidan Hutchinson - first published 23/11/2023
 
 ## Overview
 
